@@ -17,11 +17,14 @@
                     <td scope="row">{{website.url}}</td>
                     <td>{{website.title}}</td>
                     <td>{{website.accountIds?website.accountIds.length:''}}</td>
-                    <td> <button class="btn btn-primary btn fa-lg  mb-3" type="button" @click="showPopUp(website)" >Edit</button></td>
+                    <td> 
+                        <button class="btn btn-primary btn fa-lg  mb-3" type="button" @click="showPopUp(website)" >Edit</button>
+                        <button class="btn btn-danger btn fa-lg  mb-3" type="button" @click="delteWebsite(website._id)" >Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <WebsiteCreateUpdate v-if="show" @close="show=false" @refresh="fetchTableData" :currWebsite="currWebsite"/>
+        <WebsiteCreateUpdate v-if="show" @close="show=false" @refresh="fetchWebsite" :currWebsite="currWebsite"/>
     </div>  
 </template>
 
@@ -41,14 +44,14 @@ components:{
    WebsiteCreateUpdate 
 },
 created(){
-    this.fetchTableData();
+    this.fetchWebsite();
 },
 methods:{
     showPopUp(website){
         this.currWebsite = website?website:null
         this.show = true
     },
-    fetchTableData() {
+    fetchWebsite() {
         let callBack=(response)=>{
           this.websites=response.data
         }
@@ -56,11 +59,22 @@ methods:{
                console.log(error)
             }
         apiService("get",'/website',callBack,{},err)
-      }
+    },
+    delteWebsite(id) {
+        let callBack=()=>{
+          this.fetchWebsite()
+        }
+        const err = error => {
+               console.log(error)
+            }
+        apiService("delete",'/website/'+id,callBack,{},err)
+    }
 }
 }
 </script>
 
 <style scoped>
-
+button{
+    margin-right:5px ;
+}
 </style>

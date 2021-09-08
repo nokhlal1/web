@@ -24,7 +24,7 @@ export default new Vuex.Store({
       commit('User_Info', {status:true,token})
     },
     logout({commit}){
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       commit('User_Info', {status:false,token:''})
     },
     changeComp({commit},comp){

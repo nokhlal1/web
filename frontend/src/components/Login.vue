@@ -69,9 +69,8 @@ export default {
         }
         console.log(data)
         let callBack=(response)=>{
-          console.log(response)
           this.setLoginStatus(response.data.token)
-          localStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("token", response.data.token);
         }
         const err = error => {console.log(error)
                 this.error = true

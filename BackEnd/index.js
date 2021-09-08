@@ -71,11 +71,12 @@ app.post('/login',parsers,async(req,res)=>{
 
 //website
 app.post('/website',parsers,(req,res)=>{
-    try{let token=req.headers.authorization
-            var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
-        }catch(err){
-            console.log(err)
-        }
+    try{
+        let token=req.headers.authorization
+        var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+    }catch(err){
+        console.log(err)
+    }
     if(userAccess!=undefined && userAccess){
         const website=new Website(req.body)
             website.save()
@@ -90,11 +91,12 @@ app.post('/website',parsers,(req,res)=>{
 })
 //update website
 app.post('/website/:id',parsers,(req,res)=>{
-    try{let token=req.headers.authorization
-            var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
-        }catch(err){
-            console.log(err)
-        }
+    try{
+        let token=req.headers.authorization
+        var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+    }catch(err){
+        console.log(err)
+    }
     if(userAccess){
         var query = {_id: req.params.id};
         let updateData={
@@ -111,11 +113,12 @@ app.post('/website/:id',parsers,(req,res)=>{
 })
 //delete website
 app.delete('/website/:id',parsers,(req,res)=>{
-    try{let token=req.headers.authorization
-            var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
-        }catch(err){
-            console.log(err)
-        }
+    try{
+        let token=req.headers.authorization
+        var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+    }catch(err){
+        console.log(err)
+    }
     if(userAccess){
         var query = {_id: req.params.id};
         Website.findOneAndDelete(query, function(err, doc) {

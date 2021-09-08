@@ -18,8 +18,8 @@ export default {
     Login,NavBar,Website,Dashboard
   },
   created(){
-    if(localStorage.getItem('token'))
-    this.setLoginStatus(localStorage.getItem('token'))
+    if(sessionStorage.getItem('token'))
+    this.setLoginStatus(sessionStorage.getItem('token'))
   },
   computed:{
     ...mapState({
