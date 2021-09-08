@@ -26,7 +26,6 @@ mongoose.connect("mongodb+srv://zt-user:R4ys4EM2wdougyk6@zeetim-test.5edod.mongo
 })
 //signUp of user
 app.post('/signup',parsers,(req,res)=>{
-    console.log(req.body)
     let exist=false
     req.body.password=bcrypt.hashSync(req.body.password,6)
     const login=new User(req.body)
@@ -42,7 +41,6 @@ app.post('/signup',parsers,(req,res)=>{
     if(!exist)
         login.save()
         .then(result=>{
-            console.log(result)
             res.send(result)
         })
         .catch(err=>{
@@ -82,7 +80,6 @@ app.post('/website',parsers,(req,res)=>{
         const website=new Website(req.body)
             website.save()
             .then(result=>{
-                console.log(result)
                 return res.send(result)
             })
             .catch(err=>{
@@ -94,7 +91,6 @@ app.post('/website',parsers,(req,res)=>{
 //update website
 app.post('/website/:id',parsers,(req,res)=>{
     try{let token=req.headers.authorization
-        console.log(token)
             var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
         }catch(err){
             console.log(err)
@@ -108,7 +104,6 @@ app.post('/website/:id',parsers,(req,res)=>{
         }
         Website.findOneAndUpdate(query,updateData, {upsert: true}, function(err, doc) {
             if (err) return res.send(500, {error: err});
-            console.log(doc)
             return res.send({doc,message:'Succesfully saved.'});
         });
     }
@@ -117,7 +112,6 @@ app.post('/website/:id',parsers,(req,res)=>{
 //delete website
 app.delete('/website/:id',parsers,(req,res)=>{
     try{let token=req.headers.authorization
-        console.log(token)
             var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
         }catch(err){
             console.log(err)
@@ -134,16 +128,13 @@ app.delete('/website/:id',parsers,(req,res)=>{
 //get all website
 app.get('/website',parsers,async(req,res)=>{
     try{let token=req.headers.authorization
-        console.log(token)
             var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
         }catch(err){
             console.log(err)
         }
-        console.log(userAccess)
         if(userAccess && userAccess!=undefined){        
             Website.find()
                 .then(result=>{
-                    console.log(result)
                    return res.send(result)
                 })
                 .catch(err=>{
@@ -159,16 +150,13 @@ app.get('/website',parsers,async(req,res)=>{
 
 app.get('/account',parsers,(req,res)=>{
     try{let token=req.headers.authorization
-        console.log('/account',token)
             var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
         }catch(err){
             console.log(err)
         }
-    console.log(userAccess)
     if(userAccess && userAccess!=undefined){        
         Account.find()
             .then(result=>{
-                console.log(result)
                return res.send(result)
             })
             .catch(err=>{
@@ -180,14 +168,3 @@ app.get('/account',parsers,(req,res)=>{
     }
 })
 
-// app.post('/account',parsers,(req,res)=>{
-//     const website=new Account(req.body)
-//             website.save()
-//             .then(result=>{
-//                 console.log(result)
-//                 return res.send(result)
-//             })
-//             .catch(err=>{
-//                 console.log(err)
-//             })
-// })
