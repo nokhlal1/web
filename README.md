@@ -3,6 +3,10 @@
 ```
 npm install
 ```
+## Create config.js
+```
+put MongoDB URL with credential
+```
 ### Compiles and run
 ```
 node index.js

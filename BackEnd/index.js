@@ -8,11 +8,12 @@ const parsers = require("body-parser").json();
 const User =require('./user');
 const Website=require('./website')
 const Account=require('./Account')
+const config =require('./config')
 const app=express()
 const SECRET_KEY="jnjkrgnjanjknujhnuh5454545153 ###klsdmlk"
 app.use(cors());
 app.options('*', cors());
-mongoose.connect("mongodb+srv://zt-user:R4ys4EM2wdougyk6@zeetim-test.5edod.mongodb.net/site-management?retryWrites=true&w=majority",{
+mongoose.connect(config.mongoDBURL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
   },(error)=>{
