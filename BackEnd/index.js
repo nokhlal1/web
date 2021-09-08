@@ -10,10 +10,9 @@ const Website=require('./website')
 const Account=require('./Account')
 const config =require('./config')
 const app=express()
-const SECRET_KEY="jnjkrgnjanjknujhnuh5454545153 ###klsdmlk"
 app.use(cors());
 app.options('*', cors());
-mongoose.connect(config.mongoDBURL,{
+mongoose.connect(config.MONGO_DB_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
   },(error)=>{
@@ -58,7 +57,7 @@ app.post('/login',parsers,async(req,res)=>{
                 if(result){
                     pass =  await bcrypt.compare(req.body.password,result.password)
                     if(pass){
-                        return res.send({token:jwt.sign({user:result.user,_id:result._id},SECRET_KEY)})
+                        return res.send({token:jwt.sign({user:result.user,_id:result._id},config.SECRET_KEY)})
                     }
                     else return res.status(403).send({message:"User/Password Incorrect"})
                 }
@@ -74,7 +73,7 @@ app.post('/login',parsers,async(req,res)=>{
 app.post('/website',parsers,(req,res)=>{
     try{
         let token=req.headers.authorization
-        var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+        var userAccess=jwt.verify(token.replace("Bearer ",""),config.SECRET_KEY)
     }catch(err){
         console.log(err)
     }
@@ -94,7 +93,7 @@ app.post('/website',parsers,(req,res)=>{
 app.post('/website/:id',parsers,(req,res)=>{
     try{
         let token=req.headers.authorization
-        var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+        var userAccess=jwt.verify(token.replace("Bearer ",""),config.SECRET_KEY)
     }catch(err){
         console.log(err)
     }
@@ -116,7 +115,7 @@ app.post('/website/:id',parsers,(req,res)=>{
 app.delete('/website/:id',parsers,(req,res)=>{
     try{
         let token=req.headers.authorization
-        var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+        var userAccess=jwt.verify(token.replace("Bearer ",""),config.SECRET_KEY)
     }catch(err){
         console.log(err)
     }
@@ -132,7 +131,7 @@ app.delete('/website/:id',parsers,(req,res)=>{
 //get all website
 app.get('/website',parsers,async(req,res)=>{
     try{let token=req.headers.authorization
-            var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+            var userAccess=jwt.verify(token.replace("Bearer ",""),config.SECRET_KEY)
         }catch(err){
             console.log(err)
         }
@@ -154,7 +153,7 @@ app.get('/website',parsers,async(req,res)=>{
 
 app.get('/account',parsers,(req,res)=>{
     try{let token=req.headers.authorization
-            var userAccess=jwt.verify(token.replace("Bearer ",""),SECRET_KEY)
+            var userAccess=jwt.verify(token.replace("Bearer ",""),config.SECRET_KEY)
         }catch(err){
             console.log(err)
         }
