@@ -40,7 +40,9 @@
                       Please enter password.
                     </div>
                   </div>
-
+                  <div v-if="error" class="alert alert-danger" role="alert">
+                     User already exist
+                  </div>
                   <div class="text-center pt-1 mb-1 pb-1">
                     <button class="btn btn-primary btn fa-lg gradient-custom-2 mb-3" type="button" @click="signup">Sign Up</button>
                     
@@ -74,15 +76,13 @@ export default {
       minCharacter:true
     }
   },
-  created(){
-      console.log('signup')
-  },
   methods:{
       close(){
           this.$emit('close')
       },
       signup() {
         let callBack=()=>{
+          this.error=false
           alert("User Created")
           this.$emit('close')
         }
@@ -90,8 +90,8 @@ export default {
           user:this.user,
           password:this.pass1
         }
-        const err = error => {
-               console.log(error)
+        const err = () => {
+               this.error=true
             }
         if((!this.pass1 ||!this.pass2||!this.user) &&!this.validPassword) this.error=true
           
@@ -105,7 +105,6 @@ export default {
         this.containsNumber = /[0-9]/.test(value)
         this.minCharacter = /[A-Za-z0-9#?!@$%^&*-`+_]{8,}/.test(value)
         this.containsSpecial = /[#?!@$%^&*-`+_]/.test(value)
-        console.log(value,this.containsUppercase )
         if(this.pass1 && (!this.containsUppercase || !this.containsLowercase || !this.containsNumber || !this.containsSpecial)) {
          
           this.validPassword=false

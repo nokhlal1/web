@@ -67,12 +67,11 @@ export default {
           user:this.userName,
           password:this.password
         }
-        console.log(data)
         let callBack=(response)=>{
           this.setLoginStatus(response.data.token)
           sessionStorage.setItem("token", response.data.token);
         }
-        const err = error => {console.log(error)
+        const err = error => {
                 this.error = true
                 this.errorMessage = error.message
             }

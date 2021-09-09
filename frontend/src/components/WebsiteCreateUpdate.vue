@@ -26,7 +26,7 @@
                     </div>
                   </div>
                   <div class="mb-3">
-                    <select class=" form-control  mb-3" aria-label="Default select example" v-model="accountId"  >
+                    <select class=" form-control  mb-3" aria-label="Default select example" v-model="accountId"  required>
                         <option value="" disabled>-select accountIds-</option>
                         <option v-for="account in accounts" :value="account._id" :key="account._id" :disabled="existingId(account._id)">{{account._id}}</option>                        
                     </select>
@@ -77,13 +77,11 @@ export default {
     }
 },
   created(){
-      console.log("current",this.currWebsite)
       this.getAccount()
       this.title=this.currWebsite?this.currWebsite.title:'',
       this.url=this.currWebsite?this.currWebsite.url:'',
       this.accountIds=this.currWebsite.url?[...this.currWebsite.accountIds]:[],
       this.getAccount()
-      console.log(this.title)
   },
   methods:{
       close(){
@@ -126,7 +124,6 @@ export default {
       },
         getAccount() {
         let callBack=(response)=>{
-            console.log(response)
             this.accounts=response.data
         }
         const err = error => {

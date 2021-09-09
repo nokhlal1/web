@@ -55,7 +55,6 @@ topWebsite(){
 methods:{
     fetchwebsiteData() {
         let callBack=(response)=>{
-          console.log(response)
           this.websites=response.data
           
         }
@@ -66,7 +65,6 @@ methods:{
       },
       fetchAccountData() {
         let callBack=(response)=>{
-          console.log(response)
           this.accountNo=response.data.length
         }
         const err = error => {

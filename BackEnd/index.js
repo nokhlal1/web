@@ -33,7 +33,7 @@ app.post('/signup',parsers,(req,res)=>{
         .then(result=>{
             if(result.length){
             exist=true
-            res.status(400).send("already exist")}
+            return res.status(409).send("already exist")}
         })
         .catch(err=>{
             console.log(err)
@@ -41,7 +41,7 @@ app.post('/signup',parsers,(req,res)=>{
     if(!exist)
         login.save()
         .then(result=>{
-            res.send(result)
+           return res.send(result)
         })
         .catch(err=>{
             console.log(err)
