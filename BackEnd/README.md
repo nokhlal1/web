@@ -5,7 +5,7 @@ npm install
 ```
 ## Create .env 
 ```
-Create config.js file under BackEnd folder
+Create .env file under BackEnd folder
 MONGO_DB_URL=<mongoDB URL>
 SECRET_KEY=<secret key for JWT>
 ```
