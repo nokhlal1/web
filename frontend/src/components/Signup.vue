@@ -40,6 +40,9 @@
                       Please enter password.
                     </div>
                   </div>
+                  <div v-if="!passwordMatch" class="alert alert-danger" role="alert">
+                     Password does not match. Plese enter matching Password
+                  </div>
                   <div v-if="error" class="alert alert-danger" role="alert">
                      User already exist
                   </div>
@@ -73,7 +76,8 @@ export default {
       containsLowercase:true,
       containsNumber:true,
       containsSpecial:true,
-      minCharacter:true
+      minCharacter:true,
+      passwordMatch:true
     }
   },
   methods:{
@@ -81,7 +85,11 @@ export default {
           this.$emit('close')
       },
       signup() {
+        if(!this.pass1 || !this.pass2||!this.user){
+          return
+        }
         let callBack=()=>{
+          this.passwordMatch=false
           this.error=false
           alert("User Created")
           this.$emit('close')
@@ -93,9 +101,12 @@ export default {
         const err = () => {
                this.error=true
             }
-        if((!this.pass1 ||!this.pass2||!this.user) &&!this.validPassword) this.error=true
+        if(this.pass1!=this.pass2) this.passwordMatch=false
+        else{
+          if((!this.pass1 ||!this.pass2||!this.user) &&!this.validPassword) this.error=true
           
-        else apiService("post",'/signup',callBack,data,err)
+          else apiService("post",'/signup',callBack,data,err)
+        }
       },
       validate(event) {
         
