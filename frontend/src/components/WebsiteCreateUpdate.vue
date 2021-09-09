@@ -35,7 +35,7 @@
                 <div class="text-center mb-1 pb-1 float-right">
                     <button class="btn btn-primary btn " type="button" :disabled="!accountId" @click="select">Add Account ID</button>                    
                 </div>
-                    <table v-if="accountIds" class="table table-bordered table-hover">
+                    <table v-if="accountIds.length" class="table table-bordered table-hover">
                         <thead >
                             <tr>
                                 <th scope="col">AccountIds</th>
