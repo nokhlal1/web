@@ -21,10 +21,18 @@
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" id="form2Example22" :class="{'form-control':true, 'is-invalid':!pass1 & error}" v-model="pass1" placeholder="password" required/>
+                    <input type="password" id="form2Example22" :class="{'form-control':true, 'is-invalid':!pass1 & error}" v-model="pass1" @keyup="validate" placeholder="password" required/>
                     <div class="invalid-feedback">
                       Please enter password.
                     </div>
+                    <div v-if="!validPassword && pass1"
+                          class="hint left">
+                          <div v-if="!minCharacter">Password contains atleast 8 character</div>
+                          <div v-if="!containsUppercase">Password contains atleast One Uppercase</div>
+                          <div v-if="!containsLowercase">Password contains atleast One Lowercase</div>
+                          <div v-if="!containsNumber">Password contains atleast One Number</div>
+                          <div v-if="!containsSpecial">Password contains One Special Chacter</div>
+                        </div>
                   </div>
                   <div class="form-outline mb-4">
                     <input type="password" id="form2Example23" :class="{'form-control':true, 'is-invalid':!pass2 & error}" v-model="pass2" placeholder="confirm password" required/>
@@ -57,7 +65,13 @@ export default {
       user:'',
       pass1:'',
       pass2:'',
-      error:false
+      error:false,
+      validPassword:true,
+      containsUppercase:true,
+      containsLowercase:true,
+      containsNumber:true,
+      containsSpecial:true,
+      minCharacter:true
     }
   },
   created(){
@@ -79,9 +93,24 @@ export default {
         const err = error => {
                console.log(error)
             }
-        if(!this.pass1 ||!this.pass2||!this.user) this.error=true
+        if((!this.pass1 ||!this.pass2||!this.user) &&!this.validPassword) this.error=true
           
         else apiService("post",'/signup',callBack,data,err)
+      },
+      validate(event) {
+        
+        let value=event.target.value
+        this.containsUppercase = /[A-Z]/.test(value)
+        this.containsLowercase = /[a-z]/.test(value)
+        this.containsNumber = /[0-9]/.test(value)
+        this.minCharacter = /[A-Za-z0-9#?!@$%^&*-`+_]{8,}/.test(value)
+        this.containsSpecial = /[#?!@$%^&*-`+_]/.test(value)
+        console.log(value,this.containsUppercase )
+        if(this.pass1 && (!this.containsUppercase || !this.containsLowercase || !this.containsNumber || !this.containsSpecial)) {
+         
+          this.validPassword=false
+          } 
+        return !this.containsUppercase && !this.containsLowercase && !this.containsNumber && !this.containsSpecial
       }
   }
   
@@ -96,4 +125,10 @@ export default {
   opacity: .75;
   filter: blur(2px);
 } 
+.hint{
+  width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
 </style>
