@@ -3,13 +3,11 @@
 ```
 npm install
 ```
-## Create config.js
+## Create .env 
 ```
-put MongoDB URL with credential
-var config={}
-config.MONGO_DB_URL=<mongoDB URL>
-config.SECRET_KEY=<secret key for JWT>
-module.exports=config
+Create config.js file under BackEnd folder
+MONGO_DB_URL=<mongoDB URL>
+SECRET_KEY=<secret key for JWT>
 ```
 ### Compiles and run
 ```
